@@ -35,7 +35,7 @@ And if you need to work on a new issue do following:
 git checkout master
 git phlow cleanup
 ```
-And repeat...
+And repeat....
 
 ## DroneKit
 
@@ -47,6 +47,7 @@ Using a System in the loop emulated drone, we should be able to integrate functi
 Fill out README
 
 Expand Contribution section
+
 ```
 
 
