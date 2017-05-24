@@ -48,7 +48,8 @@ after_success:
   VNUM3=${VERSION_BITS[2]};
   echo $VERSION;
   echo Run Build Chain;
-  npm run check && echo End of Chain Reached - can Update Tag && if [ "$TRAVIS_BRANCH" == "master" ];
+
+  npm run check && echo End of Chain Reached - can Update Tag && if [ "$TRAVIS_BRANCH" != "master" ];
         then echo Tag update Minor;
         VNUM2=$((VNUM2+1));
         VNUM3=0;
