@@ -23,7 +23,7 @@ before_script:
 - npm run package:linux
 
 script:
-- npm run coverage
+- npm test
 - |-
   if [ "$TRAVIS_BRANCH" != "master" ];
   then git clone "https://github.com/"$TRAVIS_REPO_SLUG".git" temp_repo;
@@ -52,7 +52,8 @@ after_script:
   echo $VERSION;
   echo Run Build Chain;
 
-  npm run check && echo End of Chain Reached - can Update Tag && if [ "$TRAVIS_BRANCH" == "master" ];
+  npm run coverage
+  npm run check && echo End of Chain Reached - can Update Tag && if [ "$TRAVIS_BRANCH" != "master" ];
         then echo Tag update;
 
         VNUM3=$((VNUM3+1));
@@ -62,7 +63,6 @@ after_script:
         git tag $NEW_TAG;
         git push https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG --tags;
       fi
-
 
 cache:
   directories:
