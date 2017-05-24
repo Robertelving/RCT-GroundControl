@@ -7,24 +7,19 @@ node_js:
 branches:
   only:
   - /^ready\/.*$/
-
 sudo: required
-
 install:
 - echo Install Dependencies
 - npm install
 - sudo apt-get install python-pip python-dev
 - sudo pip install dronekit
 - sudo pip install dronekit-sitl
-
 before_script:
 - echo Start Virtual Screen
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
-
 - echo Package project
 - npm run package:linux
-
 script:
 - npm run coverage
 - |-
@@ -40,45 +35,42 @@ script:
   git push https://$GH_TOKEN@github.com/"$TRAVIS_REPO_SLUG" --delete "$TRAVIS_BRANCH";
 
   else echo Was directly on master; fi
-
 after_success:
 - |-
-    echo Pull Tags;
-    git fetch --tags;
+  echo Pull Tags;
+  git fetch --tags;
 
-    echo get Latest Tag;
-    VERSION=`git describe --tags $(git rev-list --tags --max-count=1)`;
-    VERSION_BITS=(${VERSION//./ });
-    VNUM1=${VERSION_BITS[0]};
-    VNUM2=${VERSION_BITS[1]};
-    VNUM3=${VERSION_BITS[2]};
-    echo $VERSION;
-    echo Run Build Chain;
-    npm run check && echo End of Chain Reached - can Update Tag && if [ "$TRAVIS_BRANCH" == "master" ];
-          then echo Tag update Minor;
-          VNUM2=$((VNUM2+1));
-          VNUM3=0;
+  echo get Latest Tag;
+  VERSION=`git describe --tags $(git rev-list --tags --max-count=1)`;
+  VERSION_BITS=(${VERSION//./ });
+  VNUM1=${VERSION_BITS[0]};
+  VNUM2=${VERSION_BITS[1]};
+  VNUM3=${VERSION_BITS[2]};
+  echo $VERSION;
+  echo Run Build Chain;
+  npm run check && echo End of Chain Reached - can Update Tag && if [ "$TRAVIS_BRANCH" == "master" ];
+        then echo Tag update Minor;
+        VNUM2=$((VNUM2+1));
+        VNUM3=0;
 
-          NEW_TAG="$VNUM1.$VNUM2.$VNUM3";
-          echo "Updating $VERSION to $NEW_TAG";
-          git tag $NEW_TAG;
-          git push https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG --tags;
-        fi
+        NEW_TAG="$VNUM1.$VNUM2.$VNUM3";
+        echo "Updating $VERSION to $NEW_TAG";
+        git tag $NEW_TAG;
+        git push https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG --tags;
+      fi
 
-        TEST=$(git tag -l --contains HEAD 2>&1);
-        echo test: $TEST;
+      TEST=$(git tag -l --contains HEAD 2>&1);
+      echo test: $TEST;
 
-        if [ -z "$TEST" ];
-          then echo Tag Update Patch;
-          VNUM3=$((VNUM3+1));
+      if [ -z "$TEST" ];
+        then echo Tag Update Patch;
+        VNUM3=$((VNUM3+1));
 
-          NEW_TAG="$VNUM1.$VNUM2.$VNUM3";
-          echo "Updating $VERSION to $NEW_TAG";
-          git tag $NEW_TAG;
-          git push https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG --tags;
-        fi
-
-
+        NEW_TAG="$VNUM1.$VNUM2.$VNUM3";
+        echo "Updating $VERSION to $NEW_TAG";
+        git tag $NEW_TAG;
+        git push https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG --tags;
+      fi
 cache:
   directories:
   - node_modules
@@ -88,4 +80,4 @@ notifications:
     on_failure: change
 env:
   global:
-    secure: A3LaGLGnzVfmtbt2i3ejEAUBZWM446C7FKix0x8k8tB0Ta4CsoUKMcIQxcr6W9ZNg7f7+AFTiJzhny9KostUbCQ7Anndb6JL1m81Wlzf22ZUf9oaTaTUv/W4nGIhm5r4QEl967zbuWdvrmXpUHb7POLn9Jan9u2iBt3+LDk0aIPEgyV3EEBkj9Z+Q7CUSeJPh3LOWE8cP2t/3Y9cZP/dkGMLKlUiwIW6l7vLTTfM8RkTaFcP5+SywNt8UYub+ObBvHTZK319Vjj+aGqTKUsxvmO6j8ZnzPOlpzHbOe1CyM7QZ0onsEHaoM6Ia/cZEzLwOPiCJk3lEPUDVaQN9vZlF7t37GcgRYu5rxKSGUTAqEQVefqPLC/X5hof7WwH+osYWd0HHmHOUCgChdblmsQTp6/uP+yODwoIj2X71+08vNliZPCKAzZ0N69FeLnND8RyEcQjYeXyNHis9GfQBiRo1QbSUugnsz+OKcyxZWwOZfjB4y3/SNik4Iu+4i8U1IgpEC2hWOPLr8o1yl3MBEx/gb7Mb81ft+nS2yLGDtL7S5fKYwtI3HeaLsuqwO4b77fV7+WdQR1bQWxHkj7RoxgpcrF+0mFCmb/nYYpF/4u13cS90WF5y2m263+N0TKcnAADajMfS8WC2vRjaf1jHr254vfwPq+/HrxsR/J64WKgtC4=
+    secure: rtXOe/h1xXzFgq6MhWVpkNfVwO9TafMZBzq0NExniEcxAQPgxI+R2OkBNd9nndljtTExVKrD2EaVy1PtlV8X984tSVpRKAROXUhAaajnlVmG6jJ2hW9rbqb2Bs4PB4mUeift9B+LACSdAfkBewNGKWcqShXl6qaxNXxkrV8IwwixhS19dA+P4M/Nd62huUw/TCP6px6KTiRk8mPsHrUs2PtPXH8CZJ72tuI233qZgb7JzKmFvcl/6s4+8Z6Jv6/xW5zg0LWo3Nj/UrapcqQfu/+isGumr3GQ82C1CYCceVvjtIbP797tlKWlwOvefoK3bLhF7uvQbTFmbziqJeAl5OgfGqnkNj5YOcEj+7XGZ39XbpdvTGuIbwNP0Hb3Yh8HH6NR7ZEHT05mIg26maiRdwTEXDHkyfADzwgqy40Gyh+mtAH8DJZ2HJXd5mQof4lbljPkzIwkdFZEF3n77ZKOIFPqxTMtQHQurK4ONmZEIJxxlr/xmeG/QWSfsrk2KtegnXCgVURltY6cFST2ZgTURdT6wjX4Rgtt2uTqtHi50YzjR4RT5xlmXy69iFSts/OVcdjZaYQXknr9tUfeNUefyGTpWiujjjynLLBElTYZKAdnmVzw2xBf5yghSWkI7GY2uAKNWg6YqRz5zIMMf/h7YqAtvAD1QNIOLOb7UlE62II=
