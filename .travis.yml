@@ -95,10 +95,9 @@ jobs:
         provider: releases
         api_key: $GH_TOKEN
         file:
-        if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-         "rct-groundcontrol-linux-x64.tar"; fi
-        if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-        "rct-groundcontrol-darwin-x64.tar"; fi
+
+        - "rct-groundcontrol-linux-x64.tar"
+        - "rct-groundcontrol-darwin-x64.tar"
 
         skip_cleanup: true
         on:
