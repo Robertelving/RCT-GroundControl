@@ -30,13 +30,12 @@ jobs:
   include:
     - stage: Test
       script:
-      - npm run coverage
+      - npm run test
 
     - stage: Integration
       script:
       - |-
-        if [ "$TRAVIS_BRANCH" != "master" ];
-        then git clone "https://github.com/"$TRAVIS_REPO_SLUG".git" temp_repo;
+        git clone "https://github.com/"$TRAVIS_REPO_SLUG".git" temp_repo;
         cd temp_repo;
 
         echo Mergin;
@@ -45,9 +44,7 @@ jobs:
         echo Pushing;
         git push https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG master ;
 
-        cd ..
-
-        else echo Was directly on master; fi
+        else echo Was directly on master;
 
     - stage: Code Coverage
       script:
@@ -77,7 +74,7 @@ jobs:
         NEW_TAG="$VNUM1.$VNUM2.$VNUM3";
         echo "Updating $VERSION to $NEW_TAG";
         git tag $NEW_TAG;
-        git push https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG --tags;
+        git push origin --tags;
 
       deploy:
         provider: releases
