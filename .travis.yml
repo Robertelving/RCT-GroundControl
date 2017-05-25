@@ -83,14 +83,17 @@ jobs:
       script:
       - |-
         tar cvf rct-groundcontrol-linux-x64.tar out/rct-groundcontrol-linux-x64;
-        tar cvf rct-control-darwin-x64.tar out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app/Contents/MacOS;
+        ls;
+        cd out;
+        ls;
+
 
       deploy:
         provider: releases
         api_key: $GH_TOKEN
         file:
         - "rct-groundcontrol-linux-x64.tar"
-        - "rct-groundcontrol-darwin-x64.tar"
+
         skip_cleanup: true
         on:
           tags: false
