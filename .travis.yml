@@ -23,7 +23,7 @@ before_script:
 - npm run package:linux
 
 script:
-- npm test
+- npm run coverage
 - |-
   if [ "$TRAVIS_BRANCH" != "master" ];
   then git clone "https://github.com/"$TRAVIS_REPO_SLUG".git" temp_repo;
@@ -54,7 +54,6 @@ after_script:
 
   cd ..
 
-  npm run coverage
   npm run check && echo End of Chain Reached - can Update Tag && if [ "$TRAVIS_BRANCH" != "master" ];
         then echo Tag update;
 
