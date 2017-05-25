@@ -25,9 +25,12 @@ install:
 
 
 before_script:
-  - echo Start Virtual Screen
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      echo Start Virtual Screen;
+      export DISPLAY=:99.0;
+      sh -e /etc/init.d/xvfb start ; fi
+
   - echo Package project
   - npm run package:mac
   - npm run package:linux
