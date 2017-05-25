@@ -12,22 +12,24 @@ branches:
 
 sudo: required
 
+install:
+  - echo Install Dependencies
+  - npm install
+  - sudo apt-get install python-pip python-dev
+  - sudo pip install dronekit
+  - sudo pip install dronekit-sitl
+
+before_script:
+  - echo Start Virtual Screen
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - echo Package project
+  - npm run package:linux
+  - npm run package:mac
+
 jobs:
   include:
     - stage: Test
-      install:
-      - echo Install Dependencies
-      - npm install
-      - sudo apt-get install python-pip python-dev
-      - sudo pip install dronekit
-      - sudo pip install dronekit-sitl
-      before_script:
-      - echo Start Virtual Screen
-      - export DISPLAY=:99.0
-      - sh -e /etc/init.d/xvfb start
-      - echo Package project
-      - npm run package:linux
-      - npm run package:mac
       script:
       - npm run test
 
@@ -44,20 +46,6 @@ jobs:
         git push https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG master ;
 
     - stage: Code Coverage
-      install:
-      - echo Install Dependencies
-      - npm install
-      - sudo apt-get install python-pip python-dev
-      - sudo pip install dronekit
-      - sudo pip install dronekit-sitl
-
-      before_script:
-      - echo Start Virtual Screen
-      - export DISPLAY=:99.0
-      - sh -e /etc/init.d/xvfb start
-      - echo Package project
-      - npm run package:linux
-      - npm run package:mac
 
       script:
         - npm run coverage
@@ -67,7 +55,7 @@ jobs:
     - stage: Deliver GitHub Release
       script:
       - |-
-        git checkout master;
+        git checkout master
         echo "Deploying to GitHub releases ..."
         echo Pull Tags;
         git fetch --tags;
