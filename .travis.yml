@@ -24,6 +24,7 @@ before_script:
 - sh -e /etc/init.d/xvfb start
 - echo Package project
 - npm run package:linux
+- npm run package:mac
 
 jobs:
   include:
@@ -48,34 +49,29 @@ jobs:
 
         else echo Was directly on master; fi
 
-    - after_success:
-    - echo test
+    - stage: Code Coverage
+      script:
+        - npm run coverage
+        - npm run check
+
+
 
     - stage: Deliver GitHub Release
-      script: echo "Deploying to GitHub releases ..."
-      deploy:
-        provider: releases
-        api_key: $GH_TOKEN
-        skip_cleanup: true
-        on:
-          tags: true
+      script:
+      - |-
+        echo "Deploying to GitHub releases ..."
+        echo Pull Tags;
+        git fetch --tags;
 
-after_script:
-- |-
-  echo Pull Tags;
-  git fetch --tags;
+        echo get Latest Tag;
+        VERSION=`git describe --tags $(git rev-list --tags --max-count=1)`;
+        VERSION_BITS=(${VERSION//./ });
+        VNUM1=${VERSION_BITS[0]};
+        VNUM2=${VERSION_BITS[1]};
+        VNUM3=${VERSION_BITS[2]};
+        echo $VERSION;
 
-  echo get Latest Tag;
-  VERSION=`git describe --tags $(git rev-list --tags --max-count=1)`;
-  VERSION_BITS=(${VERSION//./ });
-  VNUM1=${VERSION_BITS[0]};
-  VNUM2=${VERSION_BITS[1]};
-  VNUM3=${VERSION_BITS[2]};
-  echo $VERSION;
-  echo Run Build Chain;
-
-  npm run check && echo End of Chain Reached - can Update Tag && if [ "$TRAVIS_BRANCH" != "master" ];
-        then echo Tag update;
+        echo Tag update;
 
         VNUM3=$((VNUM3+1));
 
@@ -83,7 +79,17 @@ after_script:
         echo "Updating $VERSION to $NEW_TAG";
         git tag $NEW_TAG;
         git push https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG --tags;
-      fi
+
+      deploy:
+        provider: releases
+        api_key: $GH_TOKEN
+        file:
+        - "out/rct-groundcontrol-linux-x64/rct-groundcontrol"
+        - "out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app/Contents/MacOS/rct-groundcontrol"
+        skip_cleanup: true
+        on:
+          tags: true
+
 
 cache:
   directories:
