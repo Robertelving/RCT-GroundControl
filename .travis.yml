@@ -52,6 +52,8 @@ after_script:
   echo $VERSION;
   echo Run Build Chain;
 
+  cd ..
+
   npm run coverage
   npm run check && echo End of Chain Reached - can Update Tag && if [ "$TRAVIS_BRANCH" != "master" ];
         then echo Tag update;
