@@ -55,7 +55,6 @@ jobs:
         - npm run check
 
 
-
     - stage: Deliver GitHub Release
       script:
       - |-
@@ -89,6 +88,9 @@ jobs:
         skip_cleanup: true
         on:
           tags: true
+
+    - stage: Delete old branch
+      script: git push https://$GH_TOKEN@github.com/"$TRAVIS_REPO_SLUG" --delete "$TRAVIS_BRANCH";
 
 
 cache:
