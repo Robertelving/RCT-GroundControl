@@ -92,6 +92,9 @@ jobs:
         tar cvf rct-groundcontrol-darwin-x64.tar out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app/Contents/MacOS; fi
 
       deploy:
+        os:
+          - osx
+          - linux
         provider: releases
         api_key: $GH_TOKEN
         file:
@@ -103,9 +106,6 @@ jobs:
         on:
           tags: false
           all_branches: true
-          os:
-            - osx
-            - linux
 
     - stage: cleanup
       script: git push https://$GH_TOKEN@github.com/"$TRAVIS_REPO_SLUG" --delete "$TRAVIS_BRANCH";
