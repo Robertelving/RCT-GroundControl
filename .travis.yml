@@ -31,11 +31,11 @@ before_script:
 
 jobs:
   include:
-    - stage: Test
+    - stage: test
       script:
       - npm run test
 
-    - stage: Integration
+    - stage: integration
       script:
       - |-
         git clone "https://github.com/"$TRAVIS_REPO_SLUG".git" temp_repo;
@@ -47,14 +47,14 @@ jobs:
         echo Pushing;
         git push https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG master;
 
-    - stage: Code Coverage
+    - stage: code Coverage
 
       script:
         - npm run coverage
         - npm run check
 
 
-    - stage: Deliver GitHub Release
+    - stage: deliver GitHub Release
 
       before_deploy:
       - |-
@@ -80,18 +80,23 @@ jobs:
         git tag $NEW_TAG;
         git push -q https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG --tags;
 
+      script:
+      - |-
+        cd out/rct-groundcontrol-linux-x64;
+        tar cvf rct-groundcontrol-linux-x64.tar rct-control
+
       deploy:
         provider: releases
         api_key: $GH_TOKEN
         file:
-        - "out/rct-groundcontrol-linux-x64/rct-groundcontrol"
+        - "out/rct-groundcontrol-linux-x64/rct-groundcontrol.tar"
         - "out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app/Contents/MacOS/rct-groundcontrol"
         skip_cleanup: true
         on:
           tags: false
           all_branches: true
 
-    - stage: Delete old branch
+    - stage: cleanup
       script: git push https://$GH_TOKEN@github.com/"$TRAVIS_REPO_SLUG" --delete "$TRAVIS_BRANCH";
 
 
