@@ -34,7 +34,10 @@ before_script:
 
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       echo Package project;
-      npm run package:mac; fi
+      npm run package:mac;
+      ls;
+      cd out;
+      ls; fi
 
 
 jobs:
@@ -91,10 +94,6 @@ jobs:
       script:
       - |-
         tar cvf rct-groundcontrol-linux-x64.tar out/rct-groundcontrol-linux-x64;
-        ls;
-        cd out;
-        ls;
-
 
       deploy:
         provider: releases
@@ -106,8 +105,6 @@ jobs:
         on:
           tags: false
           all_branches: true
-          osx: true
-          linux: true
 
     - stage: cleanup
       script: git push https://$GH_TOKEN@github.com/"$TRAVIS_REPO_SLUG" --delete "$TRAVIS_BRANCH";
