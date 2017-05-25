@@ -1,8 +1,10 @@
 os:
 - linux
 - mac
+
 language:
 - node_js
+
 node_js:
 - '6.5'
 
@@ -43,7 +45,7 @@ jobs:
         git merge --ff-only origin/"$TRAVIS_BRANCH";
 
         echo Pushing;
-        git push https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG master ;
+        git push https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG master;
 
     - stage: Code Coverage
 
@@ -78,11 +80,11 @@ jobs:
         git push -q https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG --tags;
 
       deploy:
+
         provider: releases
         api_key: $GH_TOKEN
         file:
-        - "out/rct-groundcontrol-linux-x64/rct-groundcontrol"
-        - "out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app/Contents/MacOS/rct-groundcontrol"
+        - "out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app/Contents/MacOS/rct-groundcontrol.app"
         skip_cleanup: true
         on:
           tags: false
