@@ -65,6 +65,17 @@ after_script:
         git push https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG --tags;
       fi
 
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: rtXOe/h1xXzFgq6MhWVpkNfVwO9TafMZBzq0NExniEcxAQPgxI+R2OkBNd9nndljtTExVKrD2EaVy1PtlV8X984tSVpRKAROXUhAaajnlVmG6jJ2hW9rbqb2Bs4PB4mUeift9B+LACSdAfkBewNGKWcqShXl6qaxNXxkrV8IwwixhS19dA+P4M/Nd62huUw/TCP6px6KTiRk8mPsHrUs2PtPXH8CZJ72tuI233qZgb7JzKmFvcl/6s4+8Z6Jv6/xW5zg0LWo3Nj/UrapcqQfu/+isGumr3GQ82C1CYCceVvjtIbP797tlKWlwOvefoK3bLhF7uvQbTFmbziqJeAl5OgfGqnkNj5YOcEj+7XGZ39XbpdvTGuIbwNP0Hb3Yh8HH6NR7ZEHT05mIg26maiRdwTEXDHkyfADzwgqy40Gyh+mtAH8DJZ2HJXd5mQof4lbljPkzIwkdFZEF3n77ZKOIFPqxTMtQHQurK4ONmZEIJxxlr/xmeG/QWSfsrk2KtegnXCgVURltY6cFST2ZgTURdT6wjX4Rgtt2uTqtHi50YzjR4RT5xlmXy69iFSts/OVcdjZaYQXknr9tUfeNUefyGTpWiujjjynLLBElTYZKAdnmVzw2xBf5yghSWkI7GY2uAKNWg6YqRz5zIMMf/h7YqAtvAD1QNIOLOb7UlE62II=
+  file:
+    - "out/rct-groundcontrol-linux-x64/rct-groundcontrol"
+  on:
+    tags: false
+    all_branches: true
+
 cache:
   directories:
   - node_modules
