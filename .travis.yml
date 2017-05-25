@@ -85,6 +85,7 @@ jobs:
         api_key: $GH_TOKEN
         file:
         - "out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app/Contents/MacOS/rct-groundcontrol"
+        - "out/rct-groundcontrol-linux-x64/rct-groundcontrol
         skip_cleanup: true
         on:
           tags: false
