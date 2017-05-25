@@ -85,7 +85,7 @@ jobs:
         - "out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app/Contents/MacOS/rct-groundcontrol"
         skip_cleanup: true
         on:
-          tags: true
+          tags: false
 
     - stage: Delete old branch
       script: git push https://$GH_TOKEN@github.com/"$TRAVIS_REPO_SLUG" --delete "$TRAVIS_BRANCH";
