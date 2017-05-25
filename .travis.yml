@@ -86,17 +86,22 @@ jobs:
 
       script:
       - |-
-        tar cvf rct-groundcontrol-linux-x64.tar out/rct-groundcontrol-linux-x64;
-        tar cvf rct-groundcontrol-darwin-x64.tar out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app/Contents/MacOS;
+        if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+        tar cvf rct-groundcontrol-linux-x64.tar out/rct-groundcontrol-linux-x64; fi
+        if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+        tar cvf rct-groundcontrol-darwin-x64.tar out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app/Contents/MacOS; fi
 
       deploy:
-        osx: true
-        linux: true
+        os:
+          - osx
+          - linux
         provider: releases
         api_key: $GH_TOKEN
         file:
-        - "rct-groundcontrol-linux-x64.tar"
-        - "rct-groundcontrol-darwin-x64.tar"
+        if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+         "rct-groundcontrol-linux-x64.tar"; fi
+        if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+        "rct-groundcontrol-darwin-x64.tar"; fi
 
         skip_cleanup: true
         on:
