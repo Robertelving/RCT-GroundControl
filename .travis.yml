@@ -1,6 +1,6 @@
 os:
 - linux
-- mac
+- osx
 
 language:
 - node_js
