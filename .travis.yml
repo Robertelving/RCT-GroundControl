@@ -32,10 +32,7 @@ before_script:
 
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       echo Package project;
-      npm run package:mac;
-      ls;
-      cd out;
-      ls; fi
+      npm run package:mac; fi
 
 jobs:
   include:
