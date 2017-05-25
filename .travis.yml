@@ -25,9 +25,13 @@ before_script:
 
 jobs:
   include:
-    - script:
+
+    - stage: Test
+      script:
       - npm run coverage
-    - script:
+
+    - stage: Integration
+      script:
       - |-
         if [ "$TRAVIS_BRANCH" != "master" ];
         then git clone "https://github.com/"$TRAVIS_REPO_SLUG".git" temp_repo;
@@ -38,12 +42,12 @@ jobs:
 
         echo Pushing;
         git push https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG master ;
-        git push https://$GH_TOKEN@github.com/"$TRAVIS_REPO_SLUG" --delete "$TRAVIS_BRANCH";
 
         cd ..
 
         else echo Was directly on master; fi
-    - stage: GitHub Release
+
+    - stage: Deliver GitHub Release
       script: echo "Deploying to GitHub releases ..."
       deploy:
         provider: releases
