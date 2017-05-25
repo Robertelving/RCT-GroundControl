@@ -82,15 +82,9 @@ jobs:
 
       script:
       - |-
-        cd out/rct-groundcontrol-linux-x64;
-        tar cvf rct-groundcontrol-linux-x64.tar rct-groundcontrol;
-        cd ../rct-groundcontrol-darwin-x64/rct-groundcontrol.app/Contents/MacOS;
-        tar cvf rct-control-darwin-x64.tar *;
-        cd ..;
-        cd ..;
-        cd ..;
-        cd ..;
-        cd ..;
+        tar cvf rct-groundcontrol-linux-x64.tar out/rct-groundcontrol-linux-x64/rct-groundcontrol;
+        cd ;
+        tar cvf rct-control-darwin-x64.tar out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app/Contents/MacOS/rct-groundcontrol;
 
       deploy:
         provider: releases
