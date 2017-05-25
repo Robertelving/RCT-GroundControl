@@ -18,10 +18,9 @@ install:
   - echo Install Dependencies
   - npm install
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install python-pip python-dev          ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo pip install dronekit          ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo pip install dronekit-sitl         ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo pip install dronekit         ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo pip install dronekit-sitl         ; fi
+  - sudo pip install dronekit
+  - sudo pip install dronekit-sitl
+
 
 
 before_script:
@@ -29,11 +28,13 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       echo Start Virtual Screen;
       export DISPLAY=:99.0;
-      sh -e /etc/init.d/xvfb start ; fi
+      sh -e /etc/init.d/xvfb start;
+      echo Package project;
+      npm run package:linux; fi
 
-  - echo Package project
-  - npm run package:mac
-  - npm run package:linux
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      echo Package project;
+      npm run package:mac; fi
 
 
 jobs:
