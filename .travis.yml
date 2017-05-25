@@ -55,6 +55,7 @@ jobs:
 
 
     - stage: Deliver GitHub Release
+
       before_deploy:
       - |-
         git checkout master
@@ -84,7 +85,7 @@ jobs:
         provider: releases
         api_key: $GH_TOKEN
         file:
-        - "out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app/Contents/MacOS/rct-groundcontrol"
+        - "out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app/Contents/MacOS/rct-groundcontrol",
         - "out/rct-groundcontrol-linux-x64/rct-groundcontrol"
         skip_cleanup: true
         on:
