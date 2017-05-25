@@ -90,6 +90,8 @@ jobs:
         tar cvf rct-groundcontrol-darwin-x64.tar out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app/Contents/MacOS;
 
       deploy:
+        osx: true
+        linux: true
         provider: releases
         api_key: $GH_TOKEN
         file:
