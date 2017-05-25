@@ -21,8 +21,6 @@ install:
   - sudo pip install dronekit
   - sudo pip install dronekit-sitl
 
-
-
 before_script:
 
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
@@ -38,7 +36,6 @@ before_script:
       ls;
       cd out;
       ls; fi
-
 
 jobs:
   include:
