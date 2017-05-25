@@ -10,12 +10,14 @@ branches:
   - /^ready\/.*$/
 
 sudo: required
+
 install:
 - echo Install Dependencies
 - npm install
 - sudo apt-get install python-pip python-dev
 - sudo pip install dronekit
 - sudo pip install dronekit-sitl
+
 before_script:
 - echo Start Virtual Screen
 - export DISPLAY=:99.0
@@ -25,7 +27,6 @@ before_script:
 
 jobs:
   include:
-
     - stage: Test
       script:
       - npm run coverage
@@ -46,6 +47,9 @@ jobs:
         cd ..
 
         else echo Was directly on master; fi
+
+    - after_success:
+    - echo test
 
     - stage: Deliver GitHub Release
       script: echo "Deploying to GitHub releases ..."
