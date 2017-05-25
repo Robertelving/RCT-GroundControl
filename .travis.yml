@@ -17,9 +17,12 @@ sudo: required
 install:
   - echo Install Dependencies
   - npm install
-  - sudo apt-get install python-pip python-dev
-  - sudo pip install dronekit
-  - sudo pip install dronekit-sitl
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; sudo apt-get install python-pip python-dev          ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; sudo pip install dronekit          ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; sudo pip install dronekit-sitl         ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; sudo pip install dronekit         ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; sudo pip install dronekit-sitl         ; fi
+
 
 before_script:
   - echo Start Virtual Screen
