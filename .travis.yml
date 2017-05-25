@@ -75,7 +75,6 @@ jobs:
         NEW_TAG="$VNUM1.$VNUM2.$VNUM3";
         echo "Updating $VERSION to $NEW_TAG";
         git tag $NEW_TAG;
-        git push https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG --tags;
 
       deploy:
         provider: releases
@@ -85,7 +84,7 @@ jobs:
         - "out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app/Contents/MacOS/rct-groundcontrol"
         skip_cleanup: true
         on:
-          tags: false
+          tags: true
 
     - stage: Delete old branch
       script: git push https://$GH_TOKEN@github.com/"$TRAVIS_REPO_SLUG" --delete "$TRAVIS_BRANCH";
