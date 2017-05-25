@@ -45,8 +45,6 @@ jobs:
         echo Pushing;
         git push https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG master ;
 
-        else echo Was directly on master;
-
     - stage: Code Coverage
       script:
         - npm run coverage
