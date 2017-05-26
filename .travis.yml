@@ -109,7 +109,7 @@ jobs:
         - linux
 
       script:
-      - tar cvf rct-groundcontrol-linux-x64.tar out/rct-groundcontrol-linux-x64; fi
+      - tar cvf rct-groundcontrol-linux-x64.tar out/rct-groundcontrol-linux-x64
 
       deploy:
         provider: releases
