@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "license": "UNLICENSED",
   "description": "My Electron application description",
-  "repository": "https://github.com/RCTechnologies/RCT-npm GroundControl",
+  "repository": "https://github.com/RCTechnologies/RCT-GroundControl",
   "keywords": [],
   "author": "Robert Elving",
   "main": "src/index.ts",

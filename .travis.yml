@@ -41,6 +41,8 @@ jobs:
       - npm run test
 
     - stage: integration
+      install: skip
+      before_script: skip
       script:
       - |-
         git clone "https://github.com/"$TRAVIS_REPO_SLUG".git" temp_repo;
