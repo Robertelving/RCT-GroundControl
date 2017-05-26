@@ -99,7 +99,7 @@ jobs:
         file:
 
         - "rct-groundcontrol-darwin-x64.tar"
-        - "rct-groundcontrol-darwin-x64.dmg"
+        - "rct-groundcontrol-darwin.dmg"
 
         skip_cleanup: true
         on:
