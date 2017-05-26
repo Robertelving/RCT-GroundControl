@@ -14,6 +14,10 @@ branches:
 
 sudo: required
 
+env:
+  - DEPLOY_FILE=rct-groundcontrol-linux-x64.tar
+  - DEPLOY_FILE=rct-groundcontrol-darwin-x64.tar
+
 install:
   - echo Install Dependencies
   - npm install
@@ -34,10 +38,6 @@ before_script:
       echo Package project;
       npm run package:mac; fi
 
-
-      env:
-        - DEPLOY_FILE=rct-groundcontrol-linux-x64.tar
-        - DEPLOY_FILE=rct-groundcontrol-darwin-x64.tar
 
 jobs:
   include:
