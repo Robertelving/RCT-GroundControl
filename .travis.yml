@@ -34,12 +34,10 @@ before_script:
       echo Package project;
       npm run package:mac; fi
 
-matrix:
-  include:
-    - os: linux
-      env: DEPLOY_FILE=rct-groundcontrol-linux-x64.tar
-    - os: osx
-      env: DEPLOY_FILE=rct-groundcontrol-darwin-x64.tar
+
+      env:
+        - DEPLOY_FILE=rct-groundcontrol-linux-x64.tar
+        - DEPLOY_FILE=rct-groundcontrol-darwin-x64.tar
 
 jobs:
   include:
