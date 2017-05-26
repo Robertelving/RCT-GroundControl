@@ -58,48 +58,61 @@ jobs:
         - npm run coverage
         - npm run check
 
-
-    - stage: deliver GitHub Release
-      os:
-        - osx
-        - linux
-      before_deploy:
-      - |-
-        echo "Deploying to GitHub releases ..."
-        echo Pull Tags;
-        git fetch --tags;
-
-        echo get Latest Tag;
-        VERSION=`git describe --tags $(git rev-list --tags --max-count=1)`;
-        VERSION_BITS=(${VERSION//./ });
-        VNUM1=${VERSION_BITS[0]};
-        VNUM2=${VERSION_BITS[1]};
-        VNUM3=${VERSION_BITS[2]};
-        echo $VERSION;
-
-        echo Tag update;
-
-        VNUM3=$((VNUM3+1));
-
-        NEW_TAG="$VNUM1.$VNUM2.$VNUM3";
-        echo "Updating $VERSION to $NEW_TAG";
-        git tag $NEW_TAG;
-        git push -q https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG --tags;
-
+    - stage: tag commit
       script:
       - |-
-        if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-        tar cvf rct-groundcontrol-linux-x64.tar out/rct-groundcontrol-linux-x64; fi
-        if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-        tar cvf rct-groundcontrol-darwin-x64.tar out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app/Contents/MacOS; fi
+          echo "Deploying to GitHub releases ..."
+          echo Pull Tags;
+          git fetch --tags;
+
+          echo get Latest Tag;
+          VERSION=`git describe --tags $(git rev-list --tags --max-count=1)`;
+          VERSION_BITS=(${VERSION//./ });
+          VNUM1=${VERSION_BITS[0]};
+          VNUM2=${VERSION_BITS[1]};
+          VNUM3=${VERSION_BITS[2]};
+          echo $VERSION;
+
+          echo Tag update;
+
+          VNUM3=$((VNUM3+1));
+
+          NEW_TAG="$VNUM1.$VNUM2.$VNUM3";
+          echo "Updating $VERSION to $NEW_TAG";
+          git tag $NEW_TAG;
+          git push -q https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG --tags;
+
+    - stage: osx deliver GitHub Release
+      os:
+        - osx
+
+      script:
+        - tar cvf rct-groundcontrol-darwin-x64.tar out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app/Contents/MacOS
 
       deploy:
         provider: releases
         api_key: $GH_TOKEN
         file:
 
-        - "rct-groundcontrol-linux-x64.tar"
         - "rct-groundcontrol-darwin-x64.tar"
+
+        skip_cleanup: true
+        on:
+          tags: false
+          all_branches: true
+
+    - stage: Linux deliver GitHub Release
+      os:
+        - linux
+
+      script:
+      - tar cvf rct-groundcontrol-linux-x64.tar out/rct-groundcontrol-linux-x64; fi
+
+      deploy:
+        provider: releases
+        api_key: $GH_TOKEN
+        file:
+        - "rct-groundcontrol-linux-x64.tar"
 
         skip_cleanup: true
         on:
