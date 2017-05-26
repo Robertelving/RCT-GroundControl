@@ -16,12 +16,11 @@
     "package:mac": "electron-forge package && electron-installer-dmg ./out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app rct-groundcontrol-darwin",
     "package:linux": "electron-forge package --platform=linux --arch=x64",
     "package:windows": "electron-forge package --platform=windows --arch=x64",
-
     "make": "electron-forge make",
     "lint": "tslint src",
     "test": "npm run build && ava --verbose dist/tests/*.js",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls ",
-    "check" : "nyc check-coverage --lines 90 --functions 90 --branches 90",
+    "check": "nyc check-coverage --lines 90 --functions 90 --branches 90",
     "watch": "npm-watch",
     "build": "tsc -p ."
   },
@@ -82,6 +81,7 @@
     "chai-as-promised": "6.0.0",
     "coveralls": "2.11.16",
     "electron-forge": "2.8.0",
+    "electron-installer-dmg": "^0.2.1",
     "electron-packager": "8.5.2",
     "electron-prebuilt-compile": "1.4.15",
     "istanbul": "0.4.5",
