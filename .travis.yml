@@ -14,10 +14,6 @@ branches:
 
 sudo: required
 
-env:
-  - DEPLOY_FILE=rct-groundcontrol-linux-x64.tar
-  - DEPLOY_FILE=rct-groundcontrol-darwin-x64.tar
-
 install:
   - echo Install Dependencies
   - npm install
@@ -37,7 +33,6 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       echo Package project;
       npm run package:mac; fi
-
 
 jobs:
   include:
@@ -65,7 +60,9 @@ jobs:
 
 
     - stage: deliver GitHub Release
-
+      os:
+        - osx
+        - linux
       before_deploy:
       - |-
         echo "Deploying to GitHub releases ..."
@@ -97,14 +94,12 @@ jobs:
         tar cvf rct-groundcontrol-darwin-x64.tar out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app/Contents/MacOS; fi
 
       deploy:
-        os:
-          - osx
-          - linux
         provider: releases
         api_key: $GH_TOKEN
         file:
 
-        - $DEPLOY_FILE
+        - "rct-groundcontrol-linux-x64.tar"
+        - "rct-groundcontrol-darwin-x64.tar"
 
         skip_cleanup: true
         on:
