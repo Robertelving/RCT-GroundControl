@@ -91,6 +91,7 @@ jobs:
 
       script:
         - tar cvf rct-groundcontrol-darwin-x64.tar out/rct-groundcontrol-darwin-x64
+        - ls
 
       deploy:
         provider: releases
