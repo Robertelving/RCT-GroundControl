@@ -90,7 +90,7 @@ jobs:
         - osx
 
       script:
-        - tar cvf rct-groundcontrol-darwin-x64.tar out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app
+        - tar cvf rct-groundcontrol-darwin-x64.tar out/rct-groundcontrol-darwin-x64
 
       deploy:
         provider: releases
