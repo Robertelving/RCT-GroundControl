@@ -67,7 +67,7 @@ jobs:
       allow_failures: true
 
       script:
-        - yarn run funtional_test
+        - yarn run functional_test
 
     - stage: Functional Test
       os:
@@ -76,7 +76,7 @@ jobs:
       allow_failures: true
 
       script:
-            - yarn run funtional_test
+            - yarn run functional_test
 
     - stage: tag commit
       script:
