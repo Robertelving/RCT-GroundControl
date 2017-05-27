@@ -64,9 +64,7 @@ jobs:
       os:
       - osx
 
-      allow_failures:
-        - os:
-          - osx
+      allow_failures: true
 
       script:
         - yarn run funtional_test
@@ -75,9 +73,7 @@ jobs:
       os:
         - linux
 
-      allow_failures:
-        - os:
-          - linux
+      allow_failures: true
 
       script:
             - yarn run funtional_test
