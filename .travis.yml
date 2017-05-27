@@ -63,6 +63,28 @@ jobs:
         - npm run coverage
         - npm run check
 
+    - stage: Functional Test
+      os:
+      - osx
+
+      allow_failures:
+        - os:
+          - osx
+
+      script:
+        -npm run funtional_test
+
+    - stage: Functional Test
+      os:
+        - linux
+
+      allow_failures:
+        - os:
+          - linux
+
+      script:
+            -npm run funtional_test
+
     - stage: tag commit
       script:
       - |-
