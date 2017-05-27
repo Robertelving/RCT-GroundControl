@@ -1,5 +1,5 @@
 import test from 'ava';
 
 test('Test fail', async t => {
-    t.fail();
+    t.pass();
 });
