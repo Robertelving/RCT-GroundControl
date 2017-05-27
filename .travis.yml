@@ -64,16 +64,12 @@ jobs:
       os:
       - osx
 
-      allow_failures: true
-
       script:
         - yarn run functional_test
 
     - stage: Functional Test
       os:
         - linux
-
-      allow_failures: true
 
       script:
             - yarn run functional_test
