@@ -19,7 +19,7 @@
     "make": "electron-forge make",
     "lint": "tslint src",
     "test": "npm run build && ava --verbose dist/tests/*.test.js",
-    "functional_test" : "npm run build & ava --verbose dist/tests/*.functest.js",
+    "functional_test" : "yarn run build && ava --verbose dist/tests/*.functest.js",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls ",
     "check": "nyc check-coverage --lines 90 --functions 90 --branches 90",
     "watch": "npm-watch",
