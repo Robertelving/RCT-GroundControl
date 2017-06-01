@@ -148,8 +148,7 @@ jobs:
 
 cache:
   yarn: true
-  directories:
-    - node_modules
+
 
 notifications:
   email:
