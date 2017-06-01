@@ -10,7 +10,6 @@ describe('application launch', function () {
     beforeEach(function () {
         if(process.platform === "darwin"){
 
-
             this.app = new Application({
                 path: './out/rct-groundcontrol-darwin-x64/rct-groundcontrol.app/Contents/MacOS/rct-groundcontrol'
             });
