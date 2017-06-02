@@ -146,6 +146,13 @@ jobs:
       script: git push https://$GH_TOKEN@github.com/"$TRAVIS_REPO_SLUG" --delete "$TRAVIS_BRANCH";
 
 
+cache:
+  yarn: true
+  pip: true
+  directories:
+    - node_modules
+
+
 notifications:
   email:
     on_success: always
